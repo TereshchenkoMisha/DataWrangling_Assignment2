@@ -9,7 +9,7 @@ from typing import Dict, Any
 CSV_FILE = "/app/data/ip_addresses.csv"      
 SERVER_URL = "http://backend:5000/package"    
 
-SPEED_MULTIPLIER = 50
+SPEED_MULTIPLIER = 3
 
 def send_packet(packet: Dict[str, Any]) -> bool:
     try:

@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const GLOBE_RADIUS = 5;
 const MAX_POINTS = 2000;
-const POLL_INTERVAL = 400;
+const POLL_INTERVAL = 2000;
 const API_BASE = '';
 
 const COLOR_COAST = new THREE.Color(0xffffff);
@@ -18,7 +18,7 @@ let currentFilter = 0;
 const clusters = new Map();
 let clusterCount = 0;
 const activityBuckets = [];
-const CHART_HISTORY_LENGTH = 30;
+const CHART_HISTORY_LENGTH = 50;
 
 const container = document.getElementById('globe-container');
 const scene = new THREE.Scene();
@@ -183,7 +183,7 @@ const ptMat = new THREE.ShaderMaterial({
             else if (uFilter == 2 && aIsSuspicious < 0.5) vOpacity = 0.0;
             else {
                 float age = uTime - aBirthTime;
-                float fadeIn = smoothstep(0.0, 0.6, age);
+                float fadeIn = smoothstep(0.0, 1.0, age);
                 float stay = smoothstep(18.0, 12.0, age);
                 float pulse = aIsSuspicious > 0.5 ? (0.7 + 0.3 * sin(age * 5.0)) : 1.0;
                 vOpacity = fadeIn * max(stay, 0.25) * pulse;
