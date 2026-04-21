@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: traffic_backend
+    ports:
+      - "5000:5000"
+    volumes:
+      # Подключаем папку frontend как static для Flask
+      - ./frontend:/app/static
+    networks:
+      - traffic_net
+
+  sender:
+    build: ./sender
+    container_name: traffic_sender
+    depends_on:
+      - backend
+    networks:
+      - traffic_net
+    # Restart_on_failure на случай, если sender запустится раньше, чем backend успеет поднять порт
+    restart: on-failure
+
+networks:
+  traffic_net:
+    driver: bridge
