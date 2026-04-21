@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Traffic Globe</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-ring"></div>
+        <div class="loader-text">Loading globe data</div>
+    </div>
+
+    <div id="globe-container"></div>
+
+    <div id="ui-overlay">
+        <header id="header" class="glass">
+            <h1><i class="fas fa-globe" style="margin-right:6px"></i>TRAFFIC GLOBE</h1>
+            <div class="stat-chip total">
+                <span class="dot"></span>
+                <span>Packets: </span><span id="total-count">0</span>
+            </div>
+            <div class="stat-chip suspicious">
+                <span class="dot"></span>
+                <span>Alerts: </span><span id="suspicious-count">0</span>
+            </div>
+            <div id="status-indicator">
+                <span class="status-dot"></span>
+                <span id="status-text">Connecting</span>
+            </div>
+        </header>
+
+        <aside id="left-panel" class="glass">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-layer-group"></i> All Traffic
+            </button>
+            <button class="filter-btn" data-filter="normal">
+                <i class="fas fa-shield-halved"></i> Normal
+            </button>
+            <button class="filter-btn" data-filter="suspicious">
+                <i class="fas fa-triangle-exclamation"></i> Suspicious
+            </button>
+        </aside>
+
+        <aside id="right-panel" class="glass">
+            <div>
+                <div class="panel-title">Top Locations</div>
+                <div class="location-list" id="top-locations"></div>
+            </div>
+            <div style="border-top:1px solid var(--border); padding-top:12px;">
+                <div class="panel-title">Suspicious IPs</div>
+                <div class="location-list" id="suspicious-list" style="max-height:140px;"></div>
+            </div>
+        </aside>
+
+        <div id="bottom-panel" class="glass">
+            <div class="panel-title">Activity Timeline (packets / sec)</div>
+            <div id="chart-wrap">
+                <canvas id="chart-canvas"></canvas>
+            </div>
+        </div>
+
+        <div id="controls-hint">
+            <i class="fas fa-computer-mouse"></i> Drag to rotate &middot; Scroll to zoom
+        </div>
+
+        <div id="error-toast"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+    
+    <script type="module" src="script.js"></script>
+</body>
+</html>
